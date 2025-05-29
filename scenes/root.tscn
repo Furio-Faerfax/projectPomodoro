@@ -1,0 +1,119 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3tqub53lnvdm"]
+
+[ext_resource type="Script" uid="uid://c6dnlmoas2ke0" path="res://scripts/projectPomodoro.gd" id="1_twpsu"]
+[ext_resource type="Texture2D" uid="uid://djnitx7vh255c" path="res://assets/ring_texture.png" id="2_twpsu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_twpsu"]
+font_size = 42
+
+[node name="projectPomodoro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_twpsu")
+
+[node name="layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.95
+anchor_bottom = 0.95
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="menu_container" type="HBoxContainer" parent="layout"]
+layout_mode = 2
+
+[node name="options" type="Button" parent="layout/menu_container"]
+layout_mode = 2
+text = "options"
+
+[node name="round_label" type="Label" parent="layout/menu_container"]
+layout_mode = 2
+text = "rounds"
+
+[node name="state_label" type="Label" parent="layout/menu_container"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "state"
+
+[node name="autoplay_button" type="CheckButton" parent="layout/menu_container"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "autoplay"
+
+[node name="time_visuals" type="Control" parent="layout"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="time_label" type="Label" parent="layout/time_visuals"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_twpsu")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="layout/time_visuals"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = -198.0
+offset_right = 199.0
+offset_bottom = 199.0
+grow_horizontal = 2
+grow_vertical = 2
+fill_mode = 5
+texture_under = ExtResource("2_twpsu")
+texture_progress = ExtResource("2_twpsu")
+tint_under = Color(1, 1, 1, 0.203922)
+tint_progress = Color(0.317647, 1, 0.317647, 1)
+
+[node name="timer_controls" type="HBoxContainer" parent="layout"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Start" type="Button" parent="layout/timer_controls"]
+layout_mode = 2
+text = "Start"
+
+[node name="Pause" type="Button" parent="layout/timer_controls"]
+visible = false
+layout_mode = 2
+text = "Pause"
+
+[node name="Stop" type="Button" parent="layout/timer_controls"]
+layout_mode = 2
+text = "Stop"
+
+[node name="Skip" type="Button" parent="layout/timer_controls"]
+layout_mode = 2
+text = "Skip"
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="toggled" from="layout/menu_container/autoplay_button" to="." method="_on_autoplay_button_toggled"]
+[connection signal="pressed" from="layout/timer_controls/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="layout/timer_controls/Pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="layout/timer_controls/Stop" to="." method="_on_stop_pressed"]
+[connection signal="pressed" from="layout/timer_controls/Skip" to="." method="_on_skip_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -8,6 +8,21 @@ This project adheres to [Semantic Versioning](https://semver.org/) and follows t
 
 ## [Unreleased]
 - Planning and minor improvements for next release.
+- Better Graphics
+- Maybe a to-do list
+
+---
+
+---
+
+##  [0.2.0] – 2025-06-02
+### Added
+- Sounds when the timer starts and/or runs out, if autoplay is active, just the sound for finishing a time is playing.
+- If you start the app the first time, a Sound Directory is being created in the users Directory will be created, currently open the folder with F1
+-     if you place sound files with the names "break_start", "main-break_over", "mini-break_over", "work_over", "work_start"; with the filetype ".ogg" they will be dynamicly loaded
+-     you dont need every sound file, each of them which is not found, will be replaced by the default sound
+- now you can set the time durations, when the app is opened the first time
+- both, the time and the sounds can be reloaded if you click the corresponding button on top
 
 ---
 

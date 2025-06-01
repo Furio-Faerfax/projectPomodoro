@@ -12,6 +12,7 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 extends Control
+@onready var audio: AudioStreamPlayer = $audio
 
 @onready var timer: Timer = $Timer
 @onready var time_label: Label = $layout/time_visuals/time_label
@@ -20,6 +21,8 @@ extends Control
 @onready var state_label: Label = $layout/menu_container/state_label
 @onready var start: Button = $layout/timer_controls/Start
 @onready var pause: Button = $layout/timer_controls/Pause
+@onready var time_settings: AcceptDialog = $time_settings
+@onready var about_dialog: AcceptDialog = $about_dialog
 
 enum STATES {
 	IDLE,
@@ -32,6 +35,7 @@ enum STATES {
 @export var mini_break_time := 5
 @export var main_break_time := 20
 
+var timer_step := 1
 var time_in_minutes: int = 1
 
 var autoplay := false
@@ -53,6 +57,11 @@ var cycle := 1
 var state_labels = ["WORK", "MINIBREAK", "MAINBREAK"]
 
 func _ready() -> void:
+	
+	about_dialog.get_node("label").text = Settings.get_app_infos()
+	if Settings.init:
+		time_settings.popup()
+	
 	time_in_minutes = working_time
 	time_in_seconds = time_in_minutes*60
 	time_in_seconds_left = time_in_seconds
@@ -62,7 +71,6 @@ func _ready() -> void:
 	
 	state_label.text = state_labels[0]
 	round_label.text = str(_round)+" / "+str(max_rounds)+" in cycle: "+str(cycle)
-	#choose_next_time()
 
 func _on_timer_timeout() -> void:
 	if time_in_seconds_left > 0:
@@ -72,12 +80,41 @@ func _on_timer_timeout() -> void:
 		timer.start()
 		update_visuals()
 	else:
+		if !autoplay:
+			start.show()
+			pause.hide()
+		
+		audio.stop()
+		match state:
+			STATES.WORK:
+				audio.set_sound("work_over")
+			STATES.MINI_BREAK:
+				audio.set_sound("mini-break_over")
+			STATES.MAIN_BREAK:
+				audio.set_sound("main-break_over")
+			_:
+				pass
+		
+		audio.play(0.0)
 		choose_next_time()
 
 
 func _on_start_pressed() -> void:
 	start.hide()
 	pause.show()
+	if !paused:
+		audio.stop()
+		match state:
+			STATES.WORK:
+				audio.set_sound("work_start")
+			STATES.MINI_BREAK:
+				audio.set_sound("break_start")
+			STATES.MAIN_BREAK:
+				audio.set_sound("break_start")
+			_:
+				pass
+		audio.play(0.0)
+	
 	if timer.is_stopped():
 		if !paused:
 			setting_up_timer(true)
@@ -101,12 +138,12 @@ func _on_pause_pressed() -> void:
 	paused = true
 	timer.stop()
 
-func _on_skip_pressed() -> void:
+func _on_skip_pressed() -> void:#Currently no sound when skipping
 	_on_stop_pressed()
 	if autoplay:
 		start.hide()
 		pause.show()
-		
+	
 	choose_next_time()
 
 func _on_autoplay_button_toggled(toggled_on: bool) -> void:
@@ -121,7 +158,7 @@ func setting_up_timer(force_start):
 	update_visuals()
 	
 	if autoplay or force_start:
-		timer.start()
+		timer.start(timer_step)
 
 func update_visuals():
 	
@@ -144,6 +181,8 @@ func choose_next_time():
 		STATES.WORK:
 			if _round < max_rounds:
 				state = STATES.MINI_BREAK
+
+					
 				time_in_minutes = mini_break_time
 				setting_up_timer(false)
 				state_label.text = state_labels[1]
@@ -167,3 +206,36 @@ func choose_next_time():
 				state_label.text = state_labels[0]
 				setting_up_timer(false)
 				round_label.text = str(_round)+" / "+str(max_rounds)+" in cycle: "+str(cycle)
+
+func _on_accept_dialog_canceled() -> void:
+	pass # Replace with function body.
+
+
+func _on_accept_dialog_confirmed() -> void:
+	var work_val = time_settings.get_node("container/working_time/value").text as int
+	var mini_val = time_settings.get_node("container/mini_break/value").text as int
+	var main_val = time_settings.get_node("container/main_break/value").text as int
+	
+	working_time = work_val
+	mini_break_time = mini_val
+	main_break_time = main_val
+	
+	if timer.is_stopped():
+		match state:
+			STATES.WORK:
+				time_in_minutes = working_time
+			STATES.MINI_BREAK:
+				time_in_minutes = mini_break_time
+			STATES.MAIN_BREAK:
+				time_in_minutes = main_break_time
+			_:
+				pass
+		setting_up_timer(false)
+
+
+func _on_options_2_pressed() -> void:
+	time_settings.popup()
+
+
+func _on_rich_text_label_meta_clicked(meta: Variant) -> void:
+	OS.shell_open(meta)

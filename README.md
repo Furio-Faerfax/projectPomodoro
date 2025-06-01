@@ -1,5 +1,8 @@
-# projectPomodoro 0.1.0
+# projectPomodoro 0.2.0
 A minimalistic Pomodoro Timer
+
+You can change the sounds by adding "break_start", "main-break_over", "mini-break_over", "work_over", "work_start" sound files in currently ".ogg" format
+to the sounds folder in the user directory of the app, access it with F1
 
 
 ## License

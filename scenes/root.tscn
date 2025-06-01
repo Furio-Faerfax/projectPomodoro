@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3tqub53lnvdm"]
+[gd_scene load_steps=5 format=3 uid="uid://d3tqub53lnvdm"]
 
 [ext_resource type="Script" uid="uid://c6dnlmoas2ke0" path="res://scripts/projectPomodoro.gd" id="1_twpsu"]
 [ext_resource type="Texture2D" uid="uid://djnitx7vh255c" path="res://assets/ring_texture.png" id="2_twpsu"]
+[ext_resource type="Script" uid="uid://dvlxx1r1d3f8q" path="res://scripts/audio.gd" id="4_sqa0i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_twpsu"]
 font_size = 42
@@ -32,7 +33,11 @@ layout_mode = 2
 
 [node name="options" type="Button" parent="layout/menu_container"]
 layout_mode = 2
-text = "options"
+text = "reloadSnd"
+
+[node name="options2" type="Button" parent="layout/menu_container"]
+layout_mode = 2
+text = "setting_time"
 
 [node name="round_label" type="Label" parent="layout/menu_container"]
 layout_mode = 2
@@ -111,9 +116,78 @@ text = "Skip"
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="audio" type="AudioStreamPlayer" parent="."]
+script = ExtResource("4_sqa0i")
+
+[node name="time_settings" type="AcceptDialog" parent="."]
+title = "Set the duration"
+initial_position = 2
+size = Vector2i(232, 158)
+ok_button_text = "confirm"
+
+[node name="container" type="VBoxContainer" parent="time_settings"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 224.0
+offset_bottom = 109.0
+
+[node name="working_time" type="HBoxContainer" parent="time_settings/container"]
+layout_mode = 2
+
+[node name="name" type="Label" parent="time_settings/container/working_time"]
+layout_mode = 2
+text = " woking time       "
+
+[node name="value" type="LineEdit" parent="time_settings/container/working_time"]
+layout_mode = 2
+text = "25"
+placeholder_text = "25"
+
+[node name="mini_break" type="HBoxContainer" parent="time_settings/container"]
+layout_mode = 2
+
+[node name="name" type="Label" parent="time_settings/container/mini_break"]
+layout_mode = 2
+text = "mini break time "
+
+[node name="value" type="LineEdit" parent="time_settings/container/mini_break"]
+layout_mode = 2
+text = "5"
+placeholder_text = "5"
+
+[node name="main_break" type="HBoxContainer" parent="time_settings/container"]
+layout_mode = 2
+
+[node name="name" type="Label" parent="time_settings/container/main_break"]
+layout_mode = 2
+text = "main break time"
+
+[node name="value" type="LineEdit" parent="time_settings/container/main_break"]
+layout_mode = 2
+text = "20"
+placeholder_text = "20"
+
+[node name="about_dialog" type="AcceptDialog" parent="."]
+title = "About"
+initial_position = 2
+size = Vector2i(400, 200)
+ok_button_text = "close"
+
+[node name="label" type="RichTextLabel" parent="about_dialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 392.0
+offset_bottom = 151.0
+bbcode_enabled = true
+
+[connection signal="pressed" from="layout/menu_container/options" to="audio" method="_on_options_pressed"]
+[connection signal="pressed" from="layout/menu_container/options2" to="." method="_on_options_2_pressed"]
 [connection signal="toggled" from="layout/menu_container/autoplay_button" to="." method="_on_autoplay_button_toggled"]
 [connection signal="pressed" from="layout/timer_controls/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="layout/timer_controls/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="layout/timer_controls/Stop" to="." method="_on_stop_pressed"]
 [connection signal="pressed" from="layout/timer_controls/Skip" to="." method="_on_skip_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="canceled" from="time_settings" to="." method="_on_accept_dialog_canceled"]
+[connection signal="confirmed" from="time_settings" to="." method="_on_accept_dialog_confirmed"]
+[connection signal="meta_clicked" from="about_dialog/label" to="." method="_on_rich_text_label_meta_clicked"]

@@ -1,24 +1,19 @@
 extends Node
 
 const APP_NAME = "projectPomodoro"
-const VERSION: String = "v0.1.0"
+const VERSION: String = "v0.2.0"
 const AUTHOR = "Furio Faerfax"
 const user_dir: String = "user://"
+const sound_dir: String = "sounds/"
 const setting_file: String = "settings.txt"
 
-var test = 0
+var bb_link_color = "#aaaaFF"
 
 var settings: Dictionary = {
 	"first_start": true,
-	"move_right": KEY_D,
-	"move_left": KEY_A,
-	"move_up": KEY_W,
-	"move_down": KEY_S,
-	"attack": KEY_SPACE,
-	"dash": KEY_SHIFT,
 	}
 
-
+var init = false
 var key_map: Dictionary = {"f1": KEY_F1, "f2": KEY_F2}
 
 var _file: file_handler = file_handler.new()
@@ -28,6 +23,8 @@ func _ready() -> void:
 	_load_settings()
 	
 	if settings["first_start"] == true:
+		DirAccess.make_dir_recursive_absolute(user_dir+sound_dir)
+		init = true
 
 		change_setting("first_start", false)
 		_load_settings()
@@ -40,14 +37,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("f1"):
 		_open_user_directory()
 		
-				
-	if event.is_action_pressed("move_down"):
-		Global.pr("TEST: "+str(test))
-		test+=1
-	#Example of changing the keymapping
-	if event.is_action_pressed("move_up"):
-		change_or_add_key_binding("f1", KEY_Z, false)
-	
+
 
 func _open_user_directory():
 	OS.shell_open(OS.get_user_data_dir())
@@ -117,3 +107,9 @@ func change_or_add_key_binding(action: String, new_key: Key, add: bool):
 func _load_key_map():
 	for key in key_map.size():
 		change_or_add_key_binding(key_map.keys()[key], key_map[key_map.keys()[key]] as Key, true)
+
+
+func get_app_infos() -> String:
+	var info = str(APP_NAME," - ", VERSION, "\nCopyright (c) 2025 ",AUTHOR)
+	info += str("\n\n", "The Project itself is available on [url=https://github.com/Furio-Faerfax/projectPomodoro][color=",bb_link_color,"]Github[/color][/url] under the [url=https://www.apache.org/licenses/LICENSE-2.0][color=",bb_link_color,"]Apache License 2.0[/color][/url]")
+	return info

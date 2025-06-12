@@ -13,16 +13,27 @@
 #limitations under the License.
 extends Control
 @onready var audio: AudioStreamPlayer = $audio
-
 @onready var timer: Timer = $Timer
-@onready var time_label: Label = $layout/time_visuals/time_label
-@onready var progress_bar: TextureProgressBar = $layout/time_visuals/ProgressBar
-@onready var round_label: Label = $layout/menu_container/round_label
-@onready var state_label: Label = $layout/menu_container/state_label
-@onready var start: Button = $layout/timer_controls/Start
-@onready var pause: Button = $layout/timer_controls/Pause
+@onready var time_label: Label = %time_label
+@onready var progress_bar: TextureProgressBar = %ProgressBar
+@onready var round_label: Label = %round_label
+@onready var state_label: Label = %state_label
+@onready var start: Button = %Start
+@onready var pause: Button = %Pause
 @onready var time_settings: AcceptDialog = $time_settings
 @onready var about_dialog: AcceptDialog = $about_dialog
+@onready var menu_bg: ColorRect = %menu_bg
+@onready var menu: Button = %menu
+@onready var pomodoro: TabBar = %pomodoro
+@onready var tabs: TabContainer = %tabs
+@onready var undock_todo: CheckButton = %undock_todo
+@onready var pomodoro_container: Control = %pomodoro_container
+@onready var todo: TabBar = %todo
+@onready var todo_container: Control = %todo_container
+@onready var todo_window: Window = %todo_window
+
+const MENU_SVG = preload("res://assets/menu.svg")
+const MENU_OPEN_SVG = preload("res://assets/menu_open.svg")
 
 enum STATES {
 	IDLE,
@@ -56,7 +67,17 @@ var cycle := 1
 
 var state_labels = ["WORK", "MINIBREAK", "MAINBREAK"]
 
+var menu_shown := false
+var menu_offset = 5
+var window_offset = 5
+var initial_pomodoro_pos :Vector2 = Vector2()
+var initial_todo_pos :Vector2i = Vector2()
+
 func _ready() -> void:
+	
+	if undock_todo.button_pressed:
+		undocking_todo()
+	
 	
 	about_dialog.get_node("label").text = Settings.get_app_infos()
 	if Settings.init:
@@ -239,3 +260,63 @@ func _on_options_2_pressed() -> void:
 
 func _on_rich_text_label_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(meta)
+
+
+func _on_button_pressed() -> void:
+	about_dialog.popup()
+	menu.icon = MENU_SVG
+	menu_bg.hide()
+	menu_shown = false
+
+
+func _on_menu_pressed() -> void:
+	menu_shown = !menu_shown
+	if menu_shown:
+		menu_bg.show()
+		menu.icon = MENU_OPEN_SVG
+	else:
+		menu_bg.hide()
+		menu.icon = MENU_SVG
+
+
+
+func undocking_todo():
+		print(get_screen_position())
+		get_window().position.x -= todo_window.size.x/2
+		todo_window.position = get_screen_position()
+		todo_window.position.x = todo_window.position.x+get_window().size.x+window_offset
+		initial_todo_pos = todo_window.position
+		initial_pomodoro_pos = get_screen_position()
+		
+		pomodoro_container.reparent(tabs.get_parent())
+		pomodoro_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		tabs.hide()
+		menu_bg.position.y = menu.get_global_transform()[2].y+menu.icon.get_height()+menu_offset
+		
+		todo_container.reparent(todo_window)
+		todo_window.show()
+
+
+func docking_todo():
+	
+	if initial_todo_pos == todo_window.position and initial_pomodoro_pos == get_screen_position():#just if both windows havent move, reset the main windows position
+		get_window().position.x += todo_window.size.x/2
+	tabs.show()
+	pomodoro_container.reparent(pomodoro)
+	pomodoro_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	menu_bg.position.y = menu.get_global_transform()[2].y+menu.icon.get_height()+menu_offset
+	
+	todo_container.reparent(todo)
+	todo_window.hide()
+
+func _on_undock_todo_toggled(toggled_on: bool) -> void:
+	print(menu.icon.get_height())
+	if toggled_on:
+		undocking_todo()
+	else:
+		docking_todo()
+
+
+func _on_todo_window_close_requested() -> void:
+	docking_todo()
+	undock_todo.button_pressed = false

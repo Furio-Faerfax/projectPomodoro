@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbx0ac754pi43"
-path="res://.godot/imported/ring_texture_small.png-6a00c2b84b7a7e72d2f996adbff6db45.ctex"
+uid="uid://b3bp0fek7oyaf"
+path="res://.godot/imported/skip.svg-0bccc238076b28e514b2f80efa99c377.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ring_texture_small.png"
-dest_files=["res://.godot/imported/ring_texture_small.png-6a00c2b84b7a7e72d2f996adbff6db45.ctex"]
+source_file="res://assets/skip.svg"
+dest_files=["res://.godot/imported/skip.svg-0bccc238076b28e514b2f80efa99c377.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

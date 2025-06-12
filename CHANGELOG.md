@@ -13,6 +13,16 @@ This project adheres to [Semantic Versioning](https://semver.org/) and follows t
 
 ---
 
+##  [0.3.0] – 2025-06-12
+### Changed
+- Layout of the Nodes, to better fit the tabs
+- Progressbar is now svg instead of png
+
+### Added
+- Icons for the Time Controls
+- A Menu Container
+- A tab system for an integrated(and undocked) to do list
+
 ---
 
 ##  [0.2.0] – 2025-06-02

@@ -1,7 +1,7 @@
 extends Node
 
 const APP_NAME = "projectPomodoro"
-const VERSION: String = "v0.3.0"
+const VERSION: String = "v0.3.1"
 const AUTHOR = "Furio Faerfax"
 const user_dir: String = "user://"
 const sound_dir: String = "sounds/"

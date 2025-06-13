@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbc3opks7j3fk"
-path="res://.godot/imported/ring.svg-c8cd798d5211943774fbcd50650ff7f3.ctex"
+uid="uid://b3bp0fek7oyaf"
+path="res://.godot/imported/skip.svg-118f84be3996ff95c976a4d78ed9ea49.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ring.svg"
-dest_files=["res://.godot/imported/ring.svg-c8cd798d5211943774fbcd50650ff7f3.ctex"]
+source_file="res://assets/pomodoro/skip.svg"
+dest_files=["res://.godot/imported/skip.svg-118f84be3996ff95c976a4d78ed9ea49.ctex"]
 
 [params]
 

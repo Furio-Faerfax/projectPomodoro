@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bya7cuga1r3vo"
-path="res://.godot/imported/stop.svg-fc65124eb2fb3129fbdd4f17f48ea6f3.ctex"
+path="res://.godot/imported/stop.svg-d2f6d5bbea0a91f7589d4c6b5d803d89.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/stop.svg"
-dest_files=["res://.godot/imported/stop.svg-fc65124eb2fb3129fbdd4f17f48ea6f3.ctex"]
+source_file="res://assets/pomodoro/stop.svg"
+dest_files=["res://.godot/imported/stop.svg-d2f6d5bbea0a91f7589d4c6b5d803d89.ctex"]
 
 [params]
 

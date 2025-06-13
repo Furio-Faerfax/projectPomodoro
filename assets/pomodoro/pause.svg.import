@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ci4bustjtko84"
-path="res://.godot/imported/play.svg-1c68bc58d294f89383fc6b13dae7f4f1.ctex"
+uid="uid://ds8uca6sdk7qp"
+path="res://.godot/imported/pause.svg-8506f819b8c6cd1e5f5a7424cf79530f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/play.svg"
-dest_files=["res://.godot/imported/play.svg-1c68bc58d294f89383fc6b13dae7f4f1.ctex"]
+source_file="res://assets/pomodoro/pause.svg"
+dest_files=["res://.godot/imported/pause.svg-8506f819b8c6cd1e5f5a7424cf79530f.ctex"]
 
 [params]
 

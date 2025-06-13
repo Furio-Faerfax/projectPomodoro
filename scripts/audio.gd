@@ -46,6 +46,3 @@ func load_sounds_mp3(fileName):
 		return sound
 	else:
 		return null
-
-func _on_options_pressed() -> void:
-	get_sounds()

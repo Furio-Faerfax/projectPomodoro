@@ -13,6 +13,12 @@ This project adheres to [Semantic Versioning](https://semver.org/) and follows t
 
 ---
 
+##  [0.3.1] – 2025-06-14
+### Changed
+- Just Code Refactoring
+
+---
+
 ##  [0.3.0] – 2025-06-12
 ### Changed
 - Layout of the Nodes, to better fit the tabs

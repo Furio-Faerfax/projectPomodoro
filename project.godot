@@ -13,7 +13,7 @@ config_version=5
 config/name="projectPomodoro"
 run/main_scene="res://scenes/root.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://d0tla53hqr1nh"
 
 [autoload]
 

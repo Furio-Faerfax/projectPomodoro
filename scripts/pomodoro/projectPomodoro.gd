@@ -24,13 +24,23 @@ extends Control
 @onready var todo_window: Window = %todo_window
 @onready var time_settings: AcceptDialog = $time_settings
 @onready var timer: Timer = %Timer
+@onready var reload_sound: Button = $tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries/reload_sound
 
 var menu_offset = 5
 var window_offset = 5
 var initial_pomodoro_pos :Vector2 = Vector2()
 var initial_todo_pos :Vector2i = Vector2()
 
+@export var web_export := false:
+	set(val):
+		Settings.web_export = val
+
 func _ready() -> void:
+	if Settings.web_export:
+		undock_todo.disabled = true
+		reload_sound.disabled = true
+		
+		
 	if undock_todo.button_pressed:
 		undocking_todo()
 	
@@ -66,7 +76,7 @@ func _on_about_label_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(meta)
 
 func undocking_todo():
-		print(get_screen_position())
+		#print(get_screen_position())
 		get_window().position.x -= int(todo_window.size.x/2.0)
 		todo_window.position = get_screen_position()
 		todo_window.position.x = todo_window.position.x+get_window().size.x+window_offset
@@ -79,6 +89,8 @@ func undocking_todo():
 		menu_bg.position.y = menu.get_global_transform()[2].y+menu.icon.get_height()+menu_offset
 		
 		todo_container.reparent(todo_window)
+		
+		todo_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		todo_window.show()
 
 func docking_todo():
@@ -90,6 +102,7 @@ func docking_todo():
 	menu_bg.position.y = menu.get_global_transform()[2].y+menu.icon.get_height()+menu_offset
 	
 	todo_container.reparent(todo)
+	todo_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	todo_window.hide()
 
 func _on_todo_window_close_requested() -> void:

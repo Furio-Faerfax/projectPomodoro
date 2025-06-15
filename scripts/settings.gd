@@ -1,13 +1,15 @@
 extends Node
 
 const APP_NAME = "projectPomodoro"
-const VERSION: String = "v0.3.1"
+const VERSION: String = "v0.4.0"
 const AUTHOR = "Furio Faerfax"
 const user_dir: String = "user://"
 const sound_dir: String = "sounds/"
 const setting_file: String = "settings.txt"
 
 var bb_link_color = "#aaaaFF"
+
+var web_export :bool
 
 var settings: Dictionary = {
 	"first_start": true,

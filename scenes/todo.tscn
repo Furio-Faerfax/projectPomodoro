@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3 uid="uid://djtc4uphb7mhr"]
+
+[ext_resource type="Script" uid="uid://drpqg0n77tdj0" path="res://scripts/todo/todo.gd" id="1_xf1e7"]
+[ext_resource type="Texture2D" uid="uid://c872akr7o71vk" path="res://assets/todo/new.png" id="2_vjfi4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_andvk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5c4ee"]
+
+[node name="todo" type="VBoxContainer"]
+custom_minimum_size = Vector2(500, 500)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xf1e7")
+
+[node name="menu_container" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="menu" type="HBoxContainer" parent="menu_container"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.012
+anchor_top = 0.04
+anchor_right = 0.988
+anchor_bottom = 1.0
+offset_right = -3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="new" type="Button" parent="menu_container/menu"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_andvk")
+icon = ExtResource("2_vjfi4")
+
+[node name="delete_selected" type="Button" parent="menu_container/menu"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+text = "delete selected"
+
+[node name="Label" type="LineEdit" parent="menu_container/menu"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5c4ee")
+text = "To-do!"
+alignment = 1
+flat = true
+
+[node name="entries_container" type="Control" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="entries_container"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_top = 0.007
+anchor_right = 0.99
+anchor_bottom = 0.993
+offset_top = -0.066
+offset_right = -3.05176e-05
+offset_bottom = 0.065979
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="entries" type="VBoxContainer" parent="entries_container/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="info_container" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="infos" type="HBoxContainer" parent="info_container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="info" type="Label" parent="info_container/infos"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 0
+text = "test"
+
+[connection signal="pressed" from="menu_container/menu/new" to="." method="_on_new_pressed"]
+[connection signal="pressed" from="menu_container/menu/delete_selected" to="." method="_on_delete_selected_pressed"]

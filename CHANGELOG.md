@@ -9,7 +9,17 @@ This project adheres to [Semantic Versioning](https://semver.org/) and follows t
 ## [Unreleased]
 - Planning and minor improvements for next release.
 - Better Graphics
-- Maybe a to-do list
+
+---
+
+##  [0.4.0] – 2025-06-15
+### Fixed
+- Reposition the dialogs when windows are modified
+
+### Added
+- To-do list sub-application which is undockable in a new Window
+- checkbox in menu to disable sounds
+- webexport set variable to the root node, to easily switch between desktop and web export specific settings in the menu
 
 ---
 

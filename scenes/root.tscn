@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://d3tqub53lnvdm"]
+[gd_scene load_steps=34 format=3 uid="uid://d3tqub53lnvdm"]
 
 [ext_resource type="Script" uid="uid://c6dnlmoas2ke0" path="res://scripts/pomodoro/projectPomodoro.gd" id="1_twpsu"]
 [ext_resource type="Texture2D" uid="uid://cdby7233hxjii" path="res://assets/menu.svg" id="2_5sfjl"]
@@ -13,8 +13,13 @@
 [ext_resource type="Texture2D" uid="uid://b3bp0fek7oyaf" path="res://assets/pomodoro/skip.svg" id="6_3hfy5"]
 [ext_resource type="Script" uid="uid://b884q8rh26ryo" path="res://scripts/todo/todo_window.gd" id="9_3hfy5"]
 [ext_resource type="Script" uid="uid://dpo2qw4jmn7hq" path="res://scripts/pomodoro/timer.gd" id="10_vgks2"]
+[ext_resource type="PackedScene" uid="uid://djtc4uphb7mhr" path="res://scenes/todo.tscn" id="11_vgks2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ccljq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ui5n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f3p2p"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ya6yc"]
 
@@ -66,12 +71,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_ccljq")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_8ui5n")
 current_tab = 0
 
 [node name="pomodoro" type="TabBar" parent="tabs"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_f3p2p")
 metadata/_tab_index = 0
 
 [node name="pomodoro_container" type="Control" parent="tabs/pomodoro"]
@@ -106,8 +113,10 @@ script = ExtResource("2_l5cgh")
 unique_name_in_owner = true
 modulate = Color(0.321569, 0.352941, 0.380392, 1)
 layout_mode = 2
-offset_right = 53.0
-offset_bottom = 53.0
+anchor_right = 0.107
+anchor_bottom = 0.924
+offset_right = 0.141994
+offset_bottom = 0.0178375
 size_flags_horizontal = 0
 theme_override_colors/icon_hover_color = Color(0.941176, 0.941176, 0.941176, 0.721569)
 theme_override_colors/icon_pressed_color = Color(0.811765, 0.713726, 0.713726, 0.721569)
@@ -116,6 +125,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_mflgo")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_34frw")
 icon = ExtResource("2_5sfjl")
 flat = true
+metadata/_edit_use_anchors_ = true
 
 [node name="menu_bg" type="ColorRect" parent="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu"]
 unique_name_in_owner = true
@@ -123,14 +133,10 @@ visible = false
 top_level = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.044
-anchor_top = 0.113
-anchor_right = 0.354
-anchor_bottom = 0.538
-offset_left = -10.4
-offset_top = 30.5
-offset_right = -10.4
-offset_bottom = -1.00003
+offset_left = 12.0
+offset_top = 94.665
+offset_right = 167.0
+offset_bottom = 303.665
 color = Color(0.233925, 0.233925, 0.233925, 1)
 metadata/_edit_use_anchors_ = true
 
@@ -158,6 +164,13 @@ text = "Edit time"
 layout_mode = 2
 size_flags_horizontal = 10
 text = "autoplay"
+
+[node name="sounds" type="CheckButton" parent="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries"]
+layout_mode = 2
+button_pressed = true
+text = "sounds
+"
+alignment = 2
 
 [node name="undock_todo" type="CheckButton" parent="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries"]
 unique_name_in_owner = true
@@ -281,11 +294,15 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_y3xxt")
 
 [node name="round_label" type="Label" parent="tabs/pomodoro/pomodoro_container"]
 unique_name_in_owner = true
-layout_mode = 2
-offset_left = 7.0
-offset_top = 442.0
-offset_right = 62.0
-offset_bottom = 465.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = -40.0
+offset_right = 74.0
+offset_bottom = -17.0
+grow_vertical = 0
 text = "rounds"
 
 [node name="todo" type="TabBar" parent="tabs"]
@@ -294,14 +311,26 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="todo_container" type="Control" parent="tabs/todo"]
+[node name="todo_container" parent="tabs/todo" instance=ExtResource("11_vgks2")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0405117
+anchor_bottom = 0.957356
+offset_top = -15.0
+offset_bottom = 16.0
+metadata/_edit_use_anchors_ = true
+
+[node name="todo_containerold" type="Control" parent="tabs/todo"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="tabs/todo/todo_container"]
+[node name="Label" type="Label" parent="tabs/todo/todo_containerold"]
 layout_mode = 0
 offset_right = 98.0
 offset_bottom = 23.0
@@ -381,7 +410,7 @@ bbcode_enabled = true
 
 [node name="todo_window" type="Window" parent="."]
 unique_name_in_owner = true
-size = Vector2i(500, 500)
+size = Vector2i(300, 500)
 visible = false
 script = ExtResource("9_3hfy5")
 
@@ -392,6 +421,7 @@ script = ExtResource("9_3hfy5")
 [connection signal="pressed" from="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries/set_time" to="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container" method="_on_set_time_pressed"]
 [connection signal="toggled" from="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries/autoplay_button" to="." method="_on_autoplay_button_toggled"]
 [connection signal="toggled" from="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries/autoplay_button" to="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container" method="_on_autoplay_button_toggled"]
+[connection signal="toggled" from="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries/sounds" to="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container" method="_on_sounds_toggled"]
 [connection signal="pressed" from="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries/undock_todo" to="." method="_on_undock_todo_pressed"]
 [connection signal="pressed" from="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries/undock_todo" to="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container" method="_on_undock_todo_pressed"]
 [connection signal="toggled" from="tabs/pomodoro/pomodoro_container/pomodoro_layout/menu_container/menu/menu_bg/menu_entries/undock_todo" to="." method="_on_undock_todo_toggled"]
@@ -409,6 +439,6 @@ script = ExtResource("9_3hfy5")
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
 [connection signal="canceled" from="time_settings" to="." method="_on_accept_dialog_canceled"]
 [connection signal="confirmed" from="time_settings" to="." method="_on_accept_dialog_confirmed"]
-[connection signal="meta_clicked" from="about_dialog/about_label" to="." method="_on_about_label_meta_clicked"]
 [connection signal="meta_clicked" from="about_dialog/about_label" to="." method="_on_rich_text_label_meta_clicked"]
+[connection signal="meta_clicked" from="about_dialog/about_label" to="." method="_on_about_label_meta_clicked"]
 [connection signal="close_requested" from="todo_window" to="." method="_on_todo_window_close_requested"]
